@@ -30,6 +30,9 @@ def read_manifest():
 
 
 def main():
+	# Consola Windows poate folosi cp1252, care nu are diacritice românești (ș, ț).
+	if hasattr(sys.stdout, "reconfigure"):
+		sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 	name, version = read_manifest()
 	os.makedirs(DIST_DIR, exist_ok=True)
 	out = os.path.join(DIST_DIR, "%s-%s.nvda-addon" % (name, version))
